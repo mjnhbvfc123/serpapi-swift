@@ -312,7 +312,6 @@ public final class SerpApiClient: CustomStringConvertible, Sendable {
         }
     }
 
-
     private func query(params: [String: String]) -> [String: String] {
         var q = self.params
         for (key, value) in params {
