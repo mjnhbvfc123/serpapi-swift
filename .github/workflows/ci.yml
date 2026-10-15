@@ -34,11 +34,17 @@ jobs:
           fi
           echo "✓ Swift version $SWIFT_VERSION meets requirement (>= 6.2)"
       
-      # norio-nomura/action-swiftlint is a Docker action and cannot run on macOS runners
+      # norio-nomura/action-swiftlint is a Docker action and cannot run on macOS runners.
+      # SwiftLint is pinned so new upstream rules don't break CI unexpectedly.
       - name: Lint
+        env:
+          SWIFTLINT_VERSION: 0.65.1
         run: |
-          command -v swiftlint || brew install swiftlint
-          swiftlint lint --strict
+          curl -sSL -o "$RUNNER_TEMP/swiftlint.zip" \
+            "https://github.com/realm/SwiftLint/releases/download/$SWIFTLINT_VERSION/portable_swiftlint.zip"
+          unzip -q "$RUNNER_TEMP/swiftlint.zip" -d "$RUNNER_TEMP/swiftlint"
+          "$RUNNER_TEMP/swiftlint/swiftlint" version
+          "$RUNNER_TEMP/swiftlint/swiftlint" lint --strict
 
       - name: Resolve Dependencies
         run: swift package resolve
