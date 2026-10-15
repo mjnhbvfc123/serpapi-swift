@@ -35,7 +35,7 @@ public final class SerpApiClient: CustomStringConvertible, Sendable {
     private static let endpointSearches = "/searches"
     private static let formatJson = "json"
     private static let formatHtml = "html"
-    private static let formatMarkdown = "md"
+    private static let formatMd = "md"
     private static let httpStatusCodeSuccess = 200
     private static let headerRetryAfter = "Retry-After"
     /// HTTP status codes that are considered transient and worth retrying.
@@ -141,21 +141,21 @@ public final class SerpApiClient: CustomStringConvertible, Sendable {
         return html
     }
 
-    /// Markdown search perform a search using SerpApi.com
+    /// Markdown search performs a search using SerpApi.com
     ///
     /// The output is the search results converted to Markdown.
     /// It is useful for feeding search results directly into LLMs / RAG pipelines.
     ///
     /// - Parameter params: includes engine, api_key, search fields and more.
     /// - Returns: Markdown search results
-    public func markdown(params: [String: String] = [:]) async throws -> String {
-        var markdownParams = params
-        markdownParams[Self.paramOutput] = Self.formatMarkdown
-        let result = try await get(endpoint: Self.endpointSearch, decoder: .html, params: markdownParams)
-        guard let markdown = result as? String else {
+    public func md(params: [String: String] = [:]) async throws -> String {
+        var mdParams = params
+        mdParams[Self.paramOutput] = Self.formatMd
+        let result = try await get(endpoint: Self.endpointSearch, decoder: .html, params: mdParams)
+        guard let md = result as? String else {
             throw SerpApiError.jsonParseError("Expected string but got \(type(of: result))")
         }
-        return markdown
+        return md
     }
 
     /// Get location using Location API
@@ -178,11 +178,11 @@ public final class SerpApiClient: CustomStringConvertible, Sendable {
     ///
     /// - Parameters:
     ///   - searchID: from original search `results["search_metadata"]["id"]`
-    ///   - format: "json" or "html" [default: "json"]
-    /// - Returns: raw HTML or JSON Dictionary
+    ///   - format: "json", "html" or "md" [default: "json"]
+    /// - Returns: JSON Dictionary, or raw HTML / Markdown String
     public func searchArchive(searchID: String, format: String = "json") async throws -> Any {
-        guard format == Self.formatJson || format == Self.formatHtml else {
-            throw SerpApiError.invalidDecoder("format must be \(Self.formatJson) or \(Self.formatHtml)")
+        guard [Self.formatJson, Self.formatHtml, Self.formatMd].contains(format) else {
+            throw SerpApiError.invalidDecoder("format must be \(Self.formatJson), \(Self.formatHtml) or \(Self.formatMd)")
         }
         let decoder: DecoderType = format == Self.formatJson ? .json : .html
         return try await get(endpoint: "\(Self.endpointSearches)/\(searchID).\(format)", decoder: decoder)

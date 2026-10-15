@@ -47,8 +47,8 @@ struct Demo {
         // 3. Markdown Search
         do {
             print("\n3. Markdown Search for 'Coffee'...")
-            let markdown = try await client.markdown(params: ["q": "Coffee"])
-            print("   Markdown received (length: \(markdown.count) chars)")
+            let md = try await client.md(params: ["q": "Coffee"])
+            print("   Markdown received (length: \(md.count) chars)")
         } catch {
             print("   Error: \(error.localizedDescription)")
         }
