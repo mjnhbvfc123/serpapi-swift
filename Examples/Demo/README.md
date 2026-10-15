@@ -14,10 +14,10 @@ SerpApi Swift Demo
    Link: https://en.wikipedia.org/wiki/Coffee
 
 2. HTML Search for 'Coffee'...
-   HTML received (length: 47109 chars)
+   HTML received (length: 1648269 chars)
 
 3. Markdown Search for 'Coffee'...
-   Markdown received (length: <n> chars)
+   Markdown received (length: 39950 chars)
 
 4. Location API for 'Austin'...
    Found 3 locations:
