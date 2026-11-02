@@ -6,7 +6,7 @@
 
 Integrate search data into your AI workflow, RAG / fine-tuning, or iOS/macOS application using this official wrapper for [SerpApi](https://serpapi.com).
 
-SerpApi supports Google, Google Maps, Google Shopping, Baidu, Yandex, Yahoo, eBay, App Stores, and [more](https://serpapi.com).
+SerpApi supports Google, Google , Google Shopping, Baidu, Yandex, Yahoo, eBay, App Stores, and [more](https://serpapi.com).
 
 Query a vast range of data at scale, including web search results, flight schedules, stock market data, news headlines, and [more](https://serpapi.com).
 
@@ -183,7 +183,7 @@ rake demo
 The repository includes standalone example packages in the `Examples` directory. Keeping examples in separate packages ensures the core library remains platform-agnostic and easy to integrate, while providing a "real-world" testing ground for the SDK.
 
 *   **Demo**: A command-line tool showing basic search, HTML output, and API interactions.
-*   **EventsDemo**: A full SwiftUI iOS / macOS application for searching local events with GPS support and date filtering.
+*   **EventsDemo**: A full SwiftUI iOS / macOS application for searching local events with  support and date filtering.
 
 To run the **EventsDemo**:
 *   **Via CLI** (macOS Simulator):
